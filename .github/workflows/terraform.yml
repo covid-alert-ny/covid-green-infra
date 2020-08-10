@@ -14,22 +14,26 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Setup AWS Profile
-      run: mkdir -p ~/.aws && echo -e "[nys]\naws_access_key_id = $AWS_ACCESS_KEY_ID\naws_secret_access_key = $AWS_SECRET_ACCESS_KEY\n" > ~/.aws/credentials && echo -e "[profile nys]\nregion = us-east-1\noutput = text" > ~/.aws/config && cat ~/.aws/credentials | base64
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
 
     - name: Terraform Init
-      run: terraform init -backend-config="bucket=nys-cpt-dev-terraform-state" -backend-config="key=dev-terraform-state" -backend-config="profile=nys" -backend-config="region=us-east-1"
+      run: terraform init -backend-config="bucket=nys-cpt-dev-terraform-state" -backend-config="key=dev-terraform-state" -backend-config="profile=default"
 
     - name: Terraform Format
       run: terraform fmt -check
 
     - name: Terraform Plan
-      run: terraform plan
+      run: terraform plan -var-file=env-vars/nys-dev.tfvars -input=false
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/nys-deploy-test' && github.event_name == 'push'
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve -var-file=env-vars/nys-dev.tfvars -input=false
 
