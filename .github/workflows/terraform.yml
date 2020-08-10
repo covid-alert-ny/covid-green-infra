@@ -21,7 +21,7 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
     - name: Terraform Init
-      run: terraform init -backend-config="bucket=nys-cpt-dev-terraform-state" -backend-config="key=dev-terraform-state" -backend-config="profile=nys"
+      run: terraform init -backend-config="bucket=nys-cpt-dev-terraform-state" -backend-config="key=dev-terraform-state" -backend-config="profile=nys" -backend-config="region=us-east-1"
 
     - name: Terraform Format
       run: terraform fmt -check
