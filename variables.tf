@@ -399,8 +399,26 @@ variable "stats_lambda_s3_bucket" {
   default     = ""
 }
 
+variable "api_container_repo_url" {
+  description = "ECR repo to be deployed into ECS for the API container"
+  type        = string
+  default     = "latest"
+}
+
+variable "migrations_container_repo_url" {
+  description = "ECR repo to be deployed into ECS for the Migration container"
+  type        = string
+  default     = "latest"
+}
+
 variable "api_container_tag" {
   description = "ECR tag to be deployed into ECS for the API & Migration containers"
+  type        = string
+  default     = "latest"
+}
+
+variable "push_container_repo_url" {
+  description = "ECR repo to be deployed into ECS for the Push API container"
   type        = string
   default     = "latest"
 }
