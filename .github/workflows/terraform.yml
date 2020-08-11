@@ -32,7 +32,7 @@ jobs:
         export ENV_REF=${GITHUB_REF#refs/heads/}
         case "$ENV_REF" in
         nys-deploy-test|nys)
-          $ENV_REF = "nys-dev" ;;
+          ENV_REF="nys-dev" ;;
         esac
         echo "##[set-env name=deployment_environment;]$ENV_REF"
 
