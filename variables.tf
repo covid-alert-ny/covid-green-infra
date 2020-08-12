@@ -115,6 +115,9 @@ variable "wildcard_domain" {}
 variable "bastion_enabled" {
   default = true
 }
+variable "bastion_asg_desired_count" {
+  default = 0
+}
 
 # #########################################
 # SMS using AWS - used by the SMS lambda
@@ -234,7 +237,7 @@ variable "upload_token_lifetime_mins" {
   default = "1440"
 }
 variable "metrics_config" {
-  default = "{ \"CONTACT_UPLOAD\": 60, \"CHECK_IN\": 60, \"FORGET\": 60, \"TOKEN_RENEWAL\": 60, \"CALLBACK_OPTIN\": 60, \"CALLBACK_REQUEST\": 60, \"DAILY_ACTIVE_TRACE\": 60, \"CONTACT_NOTIFICATION\": 60 }"
+  default = "{ \"CONTACT_UPLOAD\": 60, \"CHECK_IN\": 60, \"FORGET\": 60, \"TOKEN_RENEWAL\": 60, \"CALLBACK_OPTIN\": 60, \"DAILY_ACTIVE_TRACE\": 60, \"CONTACT_NOTIFICATION\": 60 }"
 }
 variable "verify_rate_limit_secs" {}
 variable "push_listening_port" {
@@ -281,6 +284,9 @@ variable "enable_callback" {
 }
 variable "enable_check_in" {
   default = "true"
+}
+variable "enable_legacy_settings" {
+  default = "false"
 }
 variable "enable_metrics" {
   default = "true"
