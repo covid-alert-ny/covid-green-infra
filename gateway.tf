@@ -584,8 +584,13 @@ resource "aws_api_gateway_method_settings" "settings" {
 resource "aws_api_gateway_base_path_mapping" "main" {
   count       = local.gateway_api_domain_name_count
   api_id      = aws_api_gateway_rest_api.main.id
-  stage_name  = "live"
+  stage_name  = aws_api_gateway_stage.live.stage_name
   domain_name = aws_api_gateway_domain_name.main[0].domain_name
+
+  depends_on = [
+    aws_api_gateway_rest_api.main,
+    aws_api_gateway_stage.live
+  ]
 }
 
 resource "aws_api_gateway_authorizer" "main" {
