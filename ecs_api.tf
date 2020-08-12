@@ -90,7 +90,7 @@ resource "aws_iam_role_policy_attachment" "api_ecs_task_policy" {
 # API Service
 # #########################################
 data "template_file" "api_service_container_definitions" {
-  template = file("templates/api_service_task_definition.tpl")
+  template = file("${path.module}/templates/api_service_task_definition.tpl")
 
   vars = {
     api_image_uri        = "${aws_ecr_repository.api.repository_url}:${var.api_container_tag}"

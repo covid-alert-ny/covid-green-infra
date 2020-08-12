@@ -77,7 +77,7 @@ resource "aws_iam_role_policy_attachment" "push_ecs_task_policy" {
 # Push Service
 # #########################################
 data "template_file" "push_service_container_definitions" {
-  template = file("templates/push_service_task_definition.tpl")
+  template = file("${path.module}/templates/push_service_task_definition.tpl")
 
   vars = {
     config_var_prefix = local.config_var_prefix
