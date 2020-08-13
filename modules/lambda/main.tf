@@ -28,6 +28,16 @@ variable "enable" {
   default = true
 }
 
+variable "bucket" {
+  type = string
+  default = ""
+}
+
+variable "key" {
+  type = string
+  default = ""
+}
+
 # Where we are not using a topic and sending SMS messages
 # See https://docs.logonbox.com/app/manpage/en/article/495939
 # See https://blog.shikisoft.com/send-sms-with-sns-aws-lambda-python/
@@ -264,13 +274,15 @@ resource "aws_iam_role_policy_attachment" "this" {
 resource "aws_lambda_function" "this" {
   count = local.enable_count
 
-  filename         = format("%s/.zip/%s.zip", path.module, var.name)
+  filename         = (var.key != "" ? "" : format("%s/.zip/%s.zip", path.module, var.name))
+  s3_bucket        = (var.bucket != "" ? var.bucket : "")
+  s3_key           = (var.key != "" ? var.key : "")
   function_name    = var.name
   handler          = var.handler
   memory_size      = var.memory_size
   role             = aws_iam_role.this[0].arn
   runtime          = var.runtime
-  source_code_hash = data.archive_file.this.output_base64sha256
+  source_code_hash = (var.key != "" ? "" : data.archive_file.this.output_base64sha256)
   tags             = var.tags
   timeout          = var.timeout
 
