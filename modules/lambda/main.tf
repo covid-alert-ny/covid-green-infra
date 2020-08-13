@@ -274,9 +274,9 @@ resource "aws_iam_role_policy_attachment" "this" {
 resource "aws_lambda_function" "this" {
   count = local.enable_count
 
-  filename         = (var.key != "" ? "" : format("%s/.zip/%s.zip", path.module, var.name))
-  s3_bucket        = (var.bucket != "" ? var.bucket : "")
-  s3_key           = (var.key != "" ? var.key : "")
+  filename         = (var.key != "" ? null : format("%s/.zip/%s.zip", path.module, var.name))
+  s3_bucket        = (var.bucket != "" ? var.bucket : null)
+  s3_key           = (var.key != "" ? var.key : null)
   function_name    = var.name
   handler          = var.handler
   memory_size      = var.memory_size
