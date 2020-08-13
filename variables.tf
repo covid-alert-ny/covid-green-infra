@@ -405,6 +405,18 @@ variable "stats_lambda_s3_bucket" {
   default     = ""
 }
 
+variable "sms_lambda_s3_key" {
+  description = "S3 key where the lambda archive will be found. This should be a path relative to the bucket root."
+  type        = string
+  default     = ""
+}
+
+variable "sms_lambda_s3_bucket" {
+  description = "S3 bucket name where the lambda content will be found"
+  type        = string
+  default     = ""
+}
+
 variable "api_container_repo_url" {
   description = "ECR repo to be deployed into ECS for the API container"
   type        = string

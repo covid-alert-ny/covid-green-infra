@@ -11,6 +11,8 @@ module "sms" {
   source = "./modules/lambda"
   enable = true
   name   = format("%s-sms", module.labels.id)
+  bucket = var.lambda_sms_s3_bucket
+  key = var.lambda_sms_s3_key
 
   aws_parameter_arns = [
     aws_ssm_parameter.db_database.arn,
